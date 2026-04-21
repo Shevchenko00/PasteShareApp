@@ -1,0 +1,18 @@
+@use "@/styles/variables" as *;
+
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+}
+
+.footer {
+  height: 131px;
+  background: $black-blue;
+  border-radius: 35px 35px 0 0;
+}
