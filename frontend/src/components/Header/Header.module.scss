@@ -1,0 +1,7 @@
+@use "@/styles/variables" as *;
+.header {
+  background-color: $color-white;
+  border-bottom: 1px solid $shadow-stroke;
+  height: 115px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}

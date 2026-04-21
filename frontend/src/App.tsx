@@ -1,9 +1,11 @@
-import styles from "./App.module.scss";
+import Header from "@/components/Header/Header.tsx";
+import Footer from "@/components/Footer/Footer.tsx";
 function App() {
 
   return (
     <>
-      <h1 className={styles.a}>HELLO</h1>
+        <Header />
+        <Footer />
     </>
   )
 }
