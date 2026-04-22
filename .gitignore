@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 *.xml
 !important-config.xml
+/frontend/.env
+/backend/.env

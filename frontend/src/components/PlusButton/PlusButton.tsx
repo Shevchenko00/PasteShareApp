@@ -1,7 +1,8 @@
 import styles from './PlusButton.module.scss';
 import { useState } from "react";
 import {
-    useCreateFolderMutation,
+    useCreateFileMutation,
+    useCreateFolderMutation, useGetFileQuery,
     useGetFolderQuery
 } from "@/services/createApi.ts";
 
@@ -9,25 +10,38 @@ const PlusButton = () => {
     const [open, setOpen] = useState(false);
 
     const [createFolder] = useCreateFolderMutation();
-
-    const { data: folders, isLoading } = useGetFolderQuery();
-
-    const handleCreate = async () => {
+    const [createFile] = useCreateFileMutation();
+    // const {
+    //     data: folders,
+    //     isLoading: isFoldersLoading,
+    //     isError: isFoldersError
+    // } = useGetFolderQuery();
+    //
+    // const {
+    //     data: files,
+    //     isLoading: isFilesLoading,
+    //     isError: isFilesError
+    // } = useGetFileQuery();
+    const handleFolderCreate = async () => {
         await createFolder({ folder_name: "Test" }).unwrap();
     };
-
+    const handlFileCreate = async () => {
+        await createFile({ file_name: "Test" }).unwrap();
+    };
     return (
         <div className={styles.wrapper}>
             {open && (
                 <div className={styles.menu}>
                     <button
-                        onClick={handleCreate}
+                        onClick={handleFolderCreate}
                         className={styles.item}
                     >
                         Create Folder
                     </button>
 
-                    <button className={styles.item}>
+                    <button
+                        onClick={handlFileCreate}
+                        className={styles.item}>
                         Create File
                     </button>
                 </div>
