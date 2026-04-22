@@ -25,11 +25,30 @@
   border: none;
   padding: 10px 14px;
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 
-  transform: translateY(10px);
+  cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+
+  transform: translateY(10px) scale(0.95);
   opacity: 0;
-  animation: pop 0.25s ease forwards;
+  animation: pop 0.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
+  transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease,
+          background 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    background: rgba(0,0,0,0.02);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.97);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+  }
 }
 
 .item:nth-child(1) { animation-delay: 0.05s; }
@@ -37,8 +56,12 @@
 .item:nth-child(3) { animation-delay: 0.15s; }
 
 @keyframes pop {
-  to {
-    transform: translateY(0);
+  0% {
+    transform: translateY(10px) scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
     opacity: 1;
   }
 }
