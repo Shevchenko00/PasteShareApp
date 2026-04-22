@@ -10,8 +10,8 @@ const PlusButton = () => {
             {open && (
                 <div className={styles.menu}>
                     <button className={styles.item}>Action 1</button>
-                    <button className={styles.item}>Action 2</button>
-                    <button className={styles.item}>Action 3</button>
+                    <button className={styles.item}>Create Folder</button>
+                    <button className={styles.item}>Create File</button>
                 </div>
             )}
 
@@ -20,8 +20,11 @@ const PlusButton = () => {
                 onClick={() => setOpen(!open)}
             >
                 <span className={`${styles.icon} ${open ? styles.rotated : ""}`}>
-                    +
-                </span>
+    <svg width="24" height="24" viewBox="0 0 24 24">
+        <line x1="12" y1="5" x2="12" y2="19" stroke="white" strokeWidth="2"/>
+        <line x1="5" y1="12" x2="19" y2="12" stroke="white" strokeWidth="2"/>
+    </svg>
+</span>
             </button>
         </div>
     );
