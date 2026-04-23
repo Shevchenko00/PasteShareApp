@@ -16,13 +16,13 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         extra="forbid",
     )
-    # DB_ECHO: bool
+    DB_ECHO: bool
     ENV: str
-    # DB_USER: str
-    # DB_PASSWORD: str
-    # DB_HOST: str
-    # DB_PORT: int
-    # DB_NAME: str
+    DB_USER: str
+    DB_PASSWORD: str
+    DB_HOST: str
+    DB_PORT: int
+    DB_NAME: str
     DEBUG: bool
     ALLOWED_CREDENTIALS: bool
     ALLOWED_ORIGINS: list[str] = []
