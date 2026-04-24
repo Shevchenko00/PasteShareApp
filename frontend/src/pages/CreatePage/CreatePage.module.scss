@@ -1,7 +1,5 @@
-$color-white: #fff;
-$shadow-stroke: #E5E7EB;
-$black-blue: rgba(#111827, 0.86);
-$light-blue: #3B82F6;
+@use "@/styles/variables" as *;
+
 
 .wrapper {
   min-height: 100vh;
@@ -83,6 +81,10 @@ $light-blue: #3B82F6;
   &:hover {
     background: darken($light-blue, 5%);
   }
+  &:disabled {
+    background: grey;
+    opacity: 0.5;
+  }
 }
 
 .buttonSecondary {
@@ -96,5 +98,34 @@ $light-blue: #3B82F6;
 
   &:hover {
     background: #f3f4f6;
+  }
+}
+
+
+.selectWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.label {
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: $black-blue;
+}
+
+.select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid $shadow-stroke;
+  font-size: 14px;
+  background: $color-white;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: $light-blue;
+    box-shadow: 0 0 0 2px rgba($light-blue, 0.2);
   }
 }

@@ -6,6 +6,7 @@ const RootPage = () => {
     return (
         <>
             <Header/>
+            <h1>123123</h1>
             <PlusButton/>
             <Footer/>
         </>
