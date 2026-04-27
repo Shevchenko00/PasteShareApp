@@ -60,3 +60,22 @@
   font-size: 12px;
   color: rgba($black-blue, 0.6);
 }
+
+.editBtn {
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  color: $light-blue;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: 0.15s ease;
+
+  &:hover {
+    background: rgba($light-blue, 0.08);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
