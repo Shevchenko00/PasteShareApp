@@ -3,6 +3,7 @@ import Footer from "@/components/Footer/Footer.tsx";
 import Header from "@/components/Header/Header.tsx";
 import PasteItems from "@/components/PasteItems/PasteItems";
 import { useGetPasteQuery } from "@/services/pasteApi.ts";
+import {useAuth} from "@/hooks/useAuth.ts";
 
 const RootPage = () => {
     const {
@@ -11,7 +12,7 @@ const RootPage = () => {
         isError,
         error
     } = useGetPasteQuery();
-
+    const { user, isAuth } = useAuth()
     return (
         <>
             <Header />

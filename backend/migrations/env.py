@@ -18,6 +18,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 from app.models.paste_model import PasteModel
+from app.models.users_model import UsersModel
 from app.models.base_model import Base  # или где у тебя Base
 # target_metadata = mymodel.Base.metadata
 target_metadata = Base.metadata
