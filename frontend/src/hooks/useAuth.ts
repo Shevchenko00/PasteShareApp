@@ -2,16 +2,21 @@
 import {
     useLoginMutation,
     useLogoutMutation,
-    useGetMeQuery,
+    useGetMeQuery, useRegisterMutation,
 } from '@/services/userApi'
 
 export const useAuth = () => {
     const [loginMutation, loginState] = useLoginMutation()
     const [logoutMutation] = useLogoutMutation()
     const meQuery = useGetMeQuery()
+    const [registerMutation, registerState] = useRegisterMutation()
+
+    const register = async (email: string, password: string) => {
+        await registerMutation({email, password}).unwrap()
+    }
 
     const login = async (email: string, password: string) => {
-        await loginMutation({ email, password }).unwrap()
+        await loginMutation({email, password}).unwrap()
     }
 
     const logout = async () => {
@@ -25,8 +30,10 @@ export const useAuth = () => {
 
         login,
         logout,
-
+        register,
         loginLoading: loginState.isLoading,
         loginError: loginState.error,
+        registerLoading: registerState.isLoading,
+        registerError: registerState.error
     }
 }

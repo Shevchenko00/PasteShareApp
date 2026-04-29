@@ -17,7 +17,13 @@ export const userApi = api.injectEndpoints({
                 method: 'POST',
             }),
         }),
-
+        register: builder.mutation<void, {email: string; password: string}>({
+            query: (body) => ({
+                url: '/auth/sign_up',
+                method: 'POST',
+                body,
+            }),
+        }),
         getMe: builder.query<any, void>({
             query: () => '/auth/me',
             providesTags: ['User'],
@@ -31,4 +37,5 @@ export const {
     useLoginMutation,
     useLogoutMutation,
     useGetMeQuery,
+    useRegisterMutation
 } = userApi

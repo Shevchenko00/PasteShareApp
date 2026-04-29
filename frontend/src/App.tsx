@@ -8,6 +8,7 @@ import UpdatePage from "@/pages/UpdatePage/UpdatePage.tsx";
 import LoginPage from "@/pages/LoginPage/LoginPage.tsx";
 
 import {ProtectedRoute} from "@/pages/ProtectedRoute/ProtectedRoute.tsx";
+import RegisterPage from "@/pages/RegisterPage/RegisterPage.tsx";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
             <main className={styles.content}>
                 <Routes>
                     <Route path="/login" element={<LoginPage/>}/>
+                    <Route path="/register" element={<RegisterPage/>}/>
 
                     <Route
                         path="/"
