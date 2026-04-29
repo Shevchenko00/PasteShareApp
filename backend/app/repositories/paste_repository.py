@@ -9,6 +9,12 @@ class PasteRepository(AbstractRepository):
         self.session = session
         self.model = model
 
+    async def get_all_by_user(self, user_id: int):
+        query = select(self.model).where(self.model.user_id == user_id)
+        result = await self.session.execute(query)
+        return result.scalars().all()
+
+
     async def create(self, data: dict):
         instance = self.model(**data)
 

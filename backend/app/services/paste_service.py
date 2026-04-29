@@ -12,12 +12,22 @@ class PasteService:
     def __init__(self, repo: PasteRepository):
         self.repo = repo
 
-    async def create(self, paste: PasteCreateSchema) -> PasteModel:
-        new_paste_dict = paste.model_dump()
+    async def create(self, user_id: int, paste: PasteCreateSchema) -> PasteModel:
+        data = paste.model_dump()
 
-        new_paste_dict["expires_at"] = get_expire_at(paste.time_to_delete)
+        expires_at = get_expire_at(paste.time_to_delete)
 
+        new_paste_dict = {
+            **data,
+            "user_id": user_id,
+            "expires_at": expires_at,
+        }
+        print("DEBUG USER_ID:", user_id, type(user_id))
+        print("DEBUG DATA:", new_paste_dict)
         return await self.repo.create(new_paste_dict)
+
+    async def get_all_by_user(self, user_id: str):
+        return await self.repo.get_all_by_user(user_id)
 
     async def update(self, paste_id: str, data: PasteUpdateSchema):
         paste = await self.repo.get_single(id=paste_id)
@@ -34,15 +44,17 @@ class PasteService:
 
         return await self.repo.update(paste, update_data)
 
-    async def get_single(self, paste_id: int):
+    async def get_single(self, paste_id: str):
         paste = await self.repo.get_single(id=paste_id)
+
+        if not paste:
+            raise ValueError("Paste not found")
+
         if paste.expires_at < datetime.utcnow():
             raise HTTPException(
                 status_code=404,
                 detail="This paste has expired"
             )
-        if not paste:
-            raise ValueError("Paste not found")
 
         return {
             "id": paste.id,
