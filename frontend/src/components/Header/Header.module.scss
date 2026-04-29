@@ -1,5 +1,6 @@
 @use "@/styles/variables" as *;
 
+
 .header {
   background-color: $color-white;
   border-bottom: 1px solid $shadow-stroke;
@@ -10,6 +11,16 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
+}
+
+.left {
+  font-weight: 600;
+  color: $black-blue;
+}
+
+.right {
+  display: flex;
+  align-items: center;
 }
 
 .action {

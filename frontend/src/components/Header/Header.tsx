@@ -1,7 +1,7 @@
 import { useAuth } from "@/hooks/useAuth";
 import styles from "./Header.module.scss";
 
-export default function Header() {
+export default function Header({}) {
     const { logout } = useAuth();
 
     return (
