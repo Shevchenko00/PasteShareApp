@@ -1,45 +1,31 @@
-import {
-    fetchBaseQuery,
-    type BaseQueryFn,
-    type FetchArgs,
-    type FetchBaseQueryError,
-} from '@reduxjs/toolkit/query/react'
-
-// const API = import.meta.env.VITE_API_URL
+import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { setCredentials, logout } from '@/features/auth/authSlice'
 const API = 'http://localhost:2222'
-
-const rawBaseQuery = fetchBaseQuery({
+const baseQuery = fetchBaseQuery({
     baseUrl: API,
     credentials: 'include',
-    prepareHeaders: (headers) => {
+    prepareHeaders: (headers, { getState }) => {
+        const token = (getState() as any).auth.accessToken
+        if (token) headers.set('Authorization', `Bearer ${token}`)
         return headers
     },
 })
 
-export const baseQueryWithReauth: BaseQueryFn<
-    string | FetchArgs,
-    unknown,
-    FetchBaseQueryError
-> = async (args, api, extraOptions) => {
+export const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
+    let result = await baseQuery(args, api, extraOptions)
 
-    let result = await rawBaseQuery(args, api, extraOptions)
-
-    if (result.error && result.error.status === 401) {
-
-        const refreshResult = await rawBaseQuery(
-            {
-                url: '/auth/refresh',
-                method: 'POST',
-            },
+    if (result.error?.status === 401) {
+        const refreshResult = await baseQuery(
+            { url: '/auth/refresh', method: 'POST' },
             api,
             extraOptions
         )
 
         if (refreshResult.data) {
-            result = await rawBaseQuery(args, api, extraOptions)
+            api.dispatch(setCredentials(refreshResult.data))
+            result = await baseQuery(args, api, extraOptions)
         } else {
             api.dispatch(logout())
-            window.location.href = '/login'
         }
     }
 

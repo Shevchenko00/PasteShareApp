@@ -1,7 +1,45 @@
 @use "@/styles/variables" as *;
+
 .header {
   background-color: $color-white;
   border-bottom: 1px solid $shadow-stroke;
   height: 115px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  width: auto;
+  height: auto;
+  padding-top: 0;
+  padding-right: 0;
+  border: none;
+}
+
+.logoutButton {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid $light-blue;
+  background: transparent;
+  color: $light-blue;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logoutButton:hover {
+  background: $light-blue;
+  color: $color-white;
+}
+
+.logoutButton:active {
+  transform: scale(0.98);
 }

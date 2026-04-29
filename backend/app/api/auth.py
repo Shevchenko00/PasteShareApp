@@ -84,17 +84,6 @@ async def sign_in(
     return {"token_type": "bearer"}
 
 
-@router.get("/me", response_model=UserViewModel)
-async def get_me(
-        user_service: Annotated[UsersService, Depends(get_user_service)],
-        current_user=Depends(get_current_user),
-):
-    user = await user_service.get_single(id=current_user.id)
-
-    return UserViewModel(
-        id=user.id,
-        email=user.email,
-    )
 
 
 @router.post("/refresh")
@@ -134,6 +123,18 @@ async def refresh_token(
     )
 
     return {"accessToken": new_access_token}
+
+@router.get("/me", response_model=UserViewModel)
+async def get_me(
+        user_service: Annotated[UsersService, Depends(get_user_service)],
+        current_user=Depends(get_current_user),
+):
+    user = await user_service.get_single(id=current_user.id)
+
+    return UserViewModel(
+        id=user.id,
+        email=user.email,
+    )
 
 
 @router.post("/logout")

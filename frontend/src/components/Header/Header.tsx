@@ -1,12 +1,21 @@
-import styles from "./Header.module.scss"
+import { useAuth } from "@/hooks/useAuth";
+import styles from "./Header.module.scss";
 
-const Header = () => {
+export default function Header() {
+    const { logout } = useAuth();
+
     return (
-        <>
-            <header className={styles.header}>
-            </header>
-        </>
+        <header className={styles.header}>
+            <div className={styles.left}>My App</div>
 
-    )
+            <div className={styles.action}>
+                <button
+                    className={styles.logoutButton}
+                    onClick={logout}
+                >
+                    Logout
+                </button>
+            </div>
+        </header>
+    );
 }
-export default Header;

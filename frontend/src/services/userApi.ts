@@ -1,5 +1,5 @@
 import { api } from './api'
-
+import { setCredentials, logout } from '@/features/auth/authSlice'
 export const userApi = api.injectEndpoints({
     endpoints: (builder) => ({
 
@@ -9,21 +9,29 @@ export const userApi = api.injectEndpoints({
                 method: 'POST',
                 body,
             }),
+            invalidatesTags: ['User'], // ✅
         }),
 
-        logout: builder.mutation<void, void>({
+        logout:  builder.mutation<void, void>({
             query: () => ({
                 url: '/auth/logout',
                 method: 'POST',
             }),
+            async onQueryStarted(_, { dispatch }) {
+                dispatch(logout())
+                dispatch(api.util.resetApiState())
+            },
         }),
-        register: builder.mutation<void, {email: string; password: string}>({
+
+        register: builder.mutation<void, { email: string; password: string }>({
             query: (body) => ({
                 url: '/auth/sign_up',
                 method: 'POST',
                 body,
             }),
+            invalidatesTags: ['User'], // ✅
         }),
+
         getMe: builder.query<any, void>({
             query: () => '/auth/me',
             providesTags: ['User'],
@@ -32,7 +40,6 @@ export const userApi = api.injectEndpoints({
     }),
     overrideExisting: false,
 })
-
 export const {
     useLoginMutation,
     useLogoutMutation,
