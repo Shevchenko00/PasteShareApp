@@ -9,6 +9,7 @@ import LoginPage from "@/pages/LoginPage/LoginPage.tsx";
 
 import {ProtectedRoute} from "@/pages/ProtectedRoute/ProtectedRoute.tsx";
 import RegisterPage from "@/pages/RegisterPage/RegisterPage.tsx";
+import ReadPage from "@/pages/GetPage/ReadPage.tsx";
 
 function App() {
     return (
@@ -35,6 +36,17 @@ function App() {
                             </ProtectedRoute>
                         }
                     />
+
+                    <Route
+                        path="/paste/:id/get"
+                        element={
+                            <ProtectedRoute>
+                                <ReadPage/>
+                            </ProtectedRoute>
+                        }
+                    />
+
+
 
                     <Route
                         path="/paste/:id/edit"

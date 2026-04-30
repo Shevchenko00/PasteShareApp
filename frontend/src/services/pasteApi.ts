@@ -25,8 +25,6 @@ export const pasteApi = api.injectEndpoints({
             }),
             invalidatesTags: ["Paste"],
         }),
-
-        // 🔥 UPDATE
         updatePaste: builder.mutation<
             any,
             {
@@ -43,12 +41,23 @@ export const pasteApi = api.injectEndpoints({
             }),
             invalidatesTags: ["Paste"],
         }),
+        getOnePaste: builder.query<
+            any,
+            string
+        >({
+            query: (id:string) => ({
+                url: `/paste/${id}`,
+                method: "GET",
+            }),
+            providesTags: ["Paste"],
+        }),
     }),
     overrideExisting: false,
 });
 
 
 export const {
+    useGetOnePasteQuery,
     useGetPasteQuery,
     useCreatePasteMutation,
     useUpdatePasteMutation,
