@@ -6,7 +6,7 @@ export default function Header({}) {
 
     return (
         <header className={styles.header}>
-            <div className={styles.left}>My App</div>
+            <div className={styles.left}>Paste Share App</div>
 
             <div className={styles.action}>
                 <button
