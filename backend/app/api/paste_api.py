@@ -39,9 +39,10 @@ async def get_all_paste(
 async def update_paste(
         paste_id: str,
         data: PasteUpdateSchema,
-        service: PasteService = Depends(get_paste_service)
+        service: PasteService = Depends(get_paste_service),
+        current_user = Depends(get_current_user)
 ):
-    return await service.update(paste_id, data)
+    return await service.update(paste_id, current_user.id, data)
 
 @router.get("/{paste_id}")
 async def get_single_paste(

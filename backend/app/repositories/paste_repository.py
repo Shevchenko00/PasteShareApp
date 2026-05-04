@@ -3,6 +3,7 @@ from typing import TypeVar, Optional
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from .base_repository import AbstractRepository
+from ..models.users_model import UsersModel
 
 
 class PasteRepository(AbstractRepository):
@@ -11,9 +12,14 @@ class PasteRepository(AbstractRepository):
         self.model = model
 
     async def get_all_by_user(self, user_id: int):
-        query = select(self.model).where(self.model.user_id == user_id)
+        query = (
+            select(self.model, UsersModel.email)
+            .join(UsersModel, self.model.user_id == UsersModel.id)
+            .where(self.model.user_id == user_id)
+        )
+
         result = await self.session.execute(query)
-        pastes = result.scalars().all()
+        rows = result.all()
 
         return [
             {
@@ -22,9 +28,10 @@ class PasteRepository(AbstractRepository):
                 "text": paste.text,
                 "time_to_delete": paste.time_to_delete,
                 "expires_at": paste.expires_at,
-                "is_expired": paste.expires_at < datetime.utcnow()
+                "is_expired": paste.expires_at < datetime.utcnow(),
+                "owner": email
             }
-            for paste in pastes
+            for paste, email in rows
         ]
 
 

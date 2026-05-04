@@ -30,11 +30,15 @@ class PasteService:
     async def get_all_by_user(self, user_id: str):
         return await self.repo.get_all_by_user(user_id)
 
-    async def update(self, paste_id: str, data: PasteUpdateSchema):
+
+    async def update(self, paste_id: str, user_id: int, data: PasteUpdateSchema):
         paste = await self.repo.get_single(id=paste_id)
 
         if not paste:
-            raise ValueError("Paste not found")
+            raise HTTPException(status_code=404, detail="Paste not found")
+
+        if paste.user_id != user_id:
+            raise HTTPException(status_code=403, detail="Forbidden")
 
         update_data = data.model_dump(exclude_unset=True)
 
@@ -78,7 +82,6 @@ class PasteService:
                 "time_to_delete": p.time_to_delete,
                 "expires_at": p.expires_at,
                 "is_expired": p.expires_at < datetime.utcnow(),
-                "owner": owner.email
 
             }
             for p in pastes
