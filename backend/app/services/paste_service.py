@@ -78,6 +78,8 @@ class PasteService:
                 "time_to_delete": p.time_to_delete,
                 "expires_at": p.expires_at,
                 "is_expired": p.expires_at < datetime.utcnow(),
+                "owner": owner.email
+
             }
             for p in pastes
         ]

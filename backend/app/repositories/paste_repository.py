@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import TypeVar, Optional
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -12,7 +13,19 @@ class PasteRepository(AbstractRepository):
     async def get_all_by_user(self, user_id: int):
         query = select(self.model).where(self.model.user_id == user_id)
         result = await self.session.execute(query)
-        return result.scalars().all()
+        pastes = result.scalars().all()
+
+        return [
+            {
+                "id": paste.id,
+                "title": paste.title,
+                "text": paste.text,
+                "time_to_delete": paste.time_to_delete,
+                "expires_at": paste.expires_at,
+                "is_expired": paste.expires_at < datetime.utcnow()
+            }
+            for paste in pastes
+        ]
 
 
     async def create(self, data: dict):
